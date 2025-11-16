@@ -1,114 +1,188 @@
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../types/navigation";
-import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
-import {cadastrarUsuario,} from "../../services/usuarioService";
-import {
-  BotaoCadastrar,
-  BotaoLink,
+import React, { useState } from 'react';
+import { 
   Container,
-  ContainerLink,
-  Input,
+  LoginCard,
+  LoginHeader,
   Logo,
-  MensagemErro,
-  MensagemSucesso,
-  Subtitulo,
-  TextoBotaoCadastrar,
-  TextoBotaoLink,
-  TextoLink,
-  Titulo,
-} from "./styles";
+  LogoSubtitle,
+  LoginForm,
+  FormGroup,
+  FormLabel,
+  FormInput,
+  PasswordContainer,
+  TogglePassword,
+  LoginButton,
+  SignupLink,
+  SignupText,
+  SignupLinkText,
+  MensagemContainer,
+  Sucesso,
+  Erro,
+  LoginButtonText
+} from './styles';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../types/navigation';
+import { Usuario } from '../../types/types';
+import { cadastrarUsuario, UsuarioRequestDTO } from '../../services/usuarioService';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 const Cadastro = () => {
   const navigation = useNavigation<NavigationProp>();
-  const [nome, setNome] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [senha, setSenha] = useState<string>("");
-  const [mensagemErro, setMensagemErro] = useState<string>("");
-  const [mensagemSucesso, setMensagemSucesso] = useState<string>("");
+  const [nome, setNome] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [senha, setSenha] = useState<string>('');
+  const [confirmarSenha, setConfirmarSenha] = useState<string>('');
+  const [sucesso, setSucesso] = useState<string>('');
+  const [erro, setErro] = useState<string>('');
+  const [carregando, setCarregando] = useState<boolean>(false);
 
-  const handleCadastrar = async () => {
-    if (!nome || !email || !senha) {
-      setMensagemErro("Preencha todos os campos!");
+  const handleSubmit = async () => {
+    if (!nome || !email || !senha || !confirmarSenha) {
+      setErro("Por favor, preencha todos os campos.");
+      setSucesso("");
       return;
     }
 
-    try {
-      await cadastrarUsuario({ 
-        nome: nome, 
-        email: email,
-        senha: senha,
-        perfil: "COMUM" 
-      });
+    if (nome.length < 3) {
+      setErro("O nome deve ter pelo menos 3 caracteres.");
+      setSucesso("");
+      return;
+    }
 
-      setMensagemErro("");
-      setMensagemSucesso("Cadastro realizado com sucesso!");
+    if (senha !== confirmarSenha) {
+      setErro("As senhas não coincidem.");
+      setSucesso("");
+      return;
+    }
+
+    if (senha.length < 6) {
+      setErro("A senha deve ter pelo menos 6 caracteres.");
+      setSucesso("");
+      return;
+    }
+
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setErro("Por favor, insira um e-mail válido.");
+      setSucesso("");
+      return;
+    }
+
+    setCarregando(true);
+    setErro("");
+
+    try {
+      const novoUsuario: UsuarioRequestDTO = {
+        nome,
+        email,
+        senha,
+      };
+
+      await cadastrarUsuario(novoUsuario);
+      
+      setSucesso("Cadastro realizado com sucesso!");
+      setNome('');
+      setEmail('');
+      setSenha('');
+      setConfirmarSenha('');
 
       setTimeout(() => {
-        setMensagemSucesso("");
-        navigation.navigate("Login");
+        navigation.navigate('Login');
       }, 2000);
-    } catch (error: any) {
-      console.error("Erro no cadastro:", error);
 
-      // Verifica se o erro veio da API
-      if (error.response &&error.response.data &&error.response.data.message) {
-        setMensagemErro(error.response.data.message);
-      } else {
-        setMensagemErro("Erro ao conectar com o servidor");
-      }
+    } catch (error: any) {
+      console.error("Erro ao cadastrar:", error);
+      setErro(error.message || "Erro ao realizar cadastro. Tente novamente.");
+    } finally {
+      setCarregando(false);
     }
   };
 
   return (
     <Container>
-      <Logo source={require("../../../assets/images/logo-sem-fundo.png")} />
+      <LoginCard>
+        <LoginHeader>
+          <Logo source={require("../../../assets/images/logo-branca.png")} />
+          <LogoSubtitle>Crie sua conta e dê o próximo passo</LogoSubtitle>
+        </LoginHeader>
+        
+        <LoginForm>
+          <FormGroup>
+            <FormLabel>Nome completo</FormLabel>
+            <FormInput
+              placeholder="Seu nome completo"
+              placeholderTextColor="#8C8C9A"
+              value={nome}
+              onChangeText={setNome}
+              autoCapitalize="words"
+            />
+          </FormGroup>
 
-      <Titulo>Bem-vindo à MotoTrack</Titulo>
-      <Subtitulo>Cadastre-se para acessar o dashboard</Subtitulo>
+          <FormGroup>
+            <FormLabel>E-mail</FormLabel>
+            <FormInput
+              placeholder="seu@email.com"
+              placeholderTextColor="#8C8C9A"
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
+          </FormGroup>
+          
+          <FormGroup>
+            <FormLabel>Senha</FormLabel>
+            <PasswordContainer>
+              <FormInput
+                placeholder="Sua senha"
+                placeholderTextColor="#8C8C9A"
+                value={senha}
+                onChangeText={setSenha}
+                secureTextEntry={true}
+              />
+            </PasswordContainer>
+          </FormGroup>
 
-      <Input
-        value={nome}
-        onChangeText={setNome}
-        placeholder="Nome Completo"
-        placeholderTextColor="#999"
-      />
+          <FormGroup>
+            <FormLabel>Confirmar senha</FormLabel>
+            <PasswordContainer>
+              <FormInput
+                placeholder="Confirme sua senha"
+                placeholderTextColor="#8C8C9A"
+                value={confirmarSenha}
+                onChangeText={setConfirmarSenha}
+                secureTextEntry={true}
+              />
+            </PasswordContainer>
+          </FormGroup>
 
-      <Input
-        value={email}
-        onChangeText={setEmail}
-        placeholder="E-mail"
-        placeholderTextColor="#999"
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
+          {sucesso ? (
+            <MensagemContainer>
+              <Sucesso>{sucesso}</Sucesso>
+            </MensagemContainer>
+          ) : null}
 
-      <Input
-        value={senha}
-        onChangeText={setSenha}
-        placeholder="Senha"
-        placeholderTextColor="#999"
-        secureTextEntry
-      />
-
-      {mensagemSucesso ? (
-        <MensagemSucesso>{mensagemSucesso}</MensagemSucesso>
-      ) : null}
-      {mensagemErro ? <MensagemErro>{mensagemErro}</MensagemErro> : null}
-
-      <BotaoCadastrar onPress={handleCadastrar}>
-        <TextoBotaoCadastrar>Cadastrar</TextoBotaoCadastrar>
-      </BotaoCadastrar>
-
-      <ContainerLink>
-        <TextoLink>Já possui uma conta? </TextoLink>
-
-        <BotaoLink onPress={() => navigation.navigate("Login")}>
-          <TextoBotaoLink>Faça login</TextoBotaoLink>
-        </BotaoLink>
-      </ContainerLink>
+          {erro ? (
+            <MensagemContainer>
+              <Erro>{erro}</Erro>
+            </MensagemContainer>
+          ) : null}
+          
+          <LoginButton onPress={handleSubmit} disabled={carregando}>
+            <LoginButtonText>
+              {carregando ? 'Cadastrando...' : 'Cadastrar'}
+            </LoginButtonText>
+          </LoginButton>
+          
+          <SignupLink>
+            <SignupText>Já tem uma conta? </SignupText>
+            <SignupLinkText onPress={() => navigation.navigate('Login')}>
+              Fazer login
+            </SignupLinkText>
+          </SignupLink>
+        </LoginForm>
+      </LoginCard>
     </Container>
   );
 };

@@ -1,96 +1,146 @@
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../types/navigation";
-import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
-import { buscarUsuarios, login } from "../../services/usuarioService";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  BotaoEntrar,
-  BotaoLink,
+import React, { useEffect, useState } from 'react';
+import { 
   Container,
-  ContainerLink,
-  Input,
+  LoginCard,
+  LoginHeader,
   Logo,
-  MensagemErro,
-  MensagemSucesso,
-  Subtitulo,
-  TextoBotaoEntrar,
-  TextoBotaoLink,
-  TextoLink,
-  Titulo,
-} from "./styles";
+  LogoSubtitle,
+  LoginForm,
+  FormGroup,
+  FormLabel,
+  FormInput,
+  PasswordContainer,
+  LoginButton,
+  SignupLink,
+  SignupText,
+  SignupLinkText,
+  MensagemContainer,
+  Sucesso,
+  Erro,
+  LoginButtonText
+} from './styles';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../types/navigation';
+import { listarUsuarios } from '../../services/usuarioService';
+import { Usuario } from '../../types/types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 const Login = () => {
   const navigation = useNavigation<NavigationProp>();
-  const [email, setEmail] = useState<string>("");
-  const [senha, setSenha] = useState<string>("");
-  const [mensagemErro, setMensagemErro] = useState<string>("");
-  const [mensagemSucesso, setMensagemSucesso] = useState<string>("");
+  const [usuarios, setUsuarios] = useState<Usuario[]>([]);
+  const [email, setEmail] = useState<string>('');
+  const [senha, setSenha] = useState<string>('');
+  const [sucesso, setSucesso] = useState<string>('');
+  const [erro, setErro] = useState<string>('');
 
-  const handleLogin = async () => {
-    if (!email || !senha) {
-      setMensagemErro("Preencha todos os campos!");
-      return;
-    }
+  useEffect(() => {
+    const buscarTodosUsuarios = async () => {
+        try {
+            const response = await listarUsuarios();
 
-    try {
-        await login({ email, senha });
+            // Caso sua API retorne: { data: Usuario[] }
+            const lista: Usuario[] = response.data;
 
-        setMensagemErro('');
-        setMensagemSucesso('Login realizado com sucesso!');
+            setUsuarios(lista);
 
-        setTimeout(() => {
-            navigation.navigate('PaginaInicial');
-        }, 2000);
+            console.log("Usuários carregados:", lista);
+        } catch (error) {
+            console.error("Erro ao buscar usuários", error);
+        }
+        
+    };
 
-    } catch (e: any) {
-        console.error(e);
-        setMensagemErro(e.message || 'Erro ao conectar com o servidor');
-    }
-  };
+    buscarTodosUsuarios();
+  }, []);
+
+  const handleSubmit = async () => {
+        if (!email || !senha) {
+            setErro("Por favor, preencha todos os campos.");
+            setSucesso("");
+            return;
+        }
+
+        // Procura o usuário na lista
+        const usuarioEncontrado = usuarios.find(
+            (u) => u.email === email && u.senha === senha
+        );
+
+        if (usuarioEncontrado) {
+            setErro("");
+            setSucesso("Login realizado com sucesso!");
+            await AsyncStorage.setItem("usuarioId", String(usuarioEncontrado.id));
+
+            setTimeout(() => {
+                navigation.navigate('Login');
+            }, 2000);
+            
+        } else {
+            setSucesso("");
+            setErro("E-mail ou senha inválidos.");
+        }
+    };
 
   return (
     <Container>
-      <Logo source={require("../../../assets/images/logo-sem-fundo.png")} />
+      <LoginCard>
+        <LoginHeader>
+          <Logo source={require("../../../assets/images/logo-branca.png")} />
+          <LogoSubtitle>Dê o próximo passo na sua jornada</LogoSubtitle>
+        </LoginHeader>
+        
+        <LoginForm>
+          <FormGroup>
+            <FormLabel>E-mail</FormLabel>
+            <FormInput
+              placeholder="seu@email.com"
+              placeholderTextColor="#8C8C9A"
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
+          </FormGroup>
+          
+          <FormGroup>
+            <FormLabel>Senha</FormLabel>
+            <PasswordContainer>
+              <FormInput
+                placeholder="Sua senha"
+                placeholderTextColor="#8C8C9A"
+                value={senha}
+                onChangeText={setSenha}
+                secureTextEntry={true}
+              />
+            </PasswordContainer>
+          </FormGroup>
 
-      <Titulo>Bem-Vindo de volta</Titulo>
-      <Subtitulo>Entre com sua conta</Subtitulo>
-
-      <Input
-        value={email}
-        onChangeText={setEmail}
-        placeholder="E-mail"
-        placeholderTextColor="#999"
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-
-      <Input
-        value={senha}
-        onChangeText={setSenha}
-        placeholder="Senha"
-        placeholderTextColor="#999"
-        secureTextEntry
-      />
-
-      {mensagemSucesso ? (
-        <MensagemSucesso>{mensagemSucesso}</MensagemSucesso>
-      ) : null}
-      {mensagemErro ? <MensagemErro>{mensagemErro}</MensagemErro> : null}
-
-      <BotaoEntrar onPress={handleLogin}>
-        <TextoBotaoEntrar>Entrar</TextoBotaoEntrar>
-      </BotaoEntrar>
-
-      <ContainerLink>
-        <TextoLink>Não possui uma conta? </TextoLink>
-
-        <BotaoLink onPress={() => navigation.navigate("Cadastro")}>
-          <TextoBotaoLink>Cadastre-se</TextoBotaoLink>
-        </BotaoLink>
-      </ContainerLink>
+            <>
+                {sucesso ? (
+                    <MensagemContainer>
+                    <Sucesso>{sucesso}</Sucesso>
+                    </MensagemContainer>
+                ) : null}
+                {erro ? (
+                    <MensagemContainer>
+                    <Erro>{erro}</Erro>
+                    </MensagemContainer>
+                ) : null}
+            </>
+          
+          <LoginButton onPress={handleSubmit}>
+            <LoginButtonText>Entrar</LoginButtonText>
+          </LoginButton>
+          
+          <SignupLink>
+            <SignupText>Não tem uma conta? </SignupText>
+            <SignupLinkText onPress={() => navigation.navigate('Cadastro')}>Cadastre-se</SignupLinkText>
+            {/* onPress={navigation.navigate('Cadastro')} */}
+          </SignupLink>
+        </LoginForm>
+      </LoginCard>
     </Container>
   );
 };

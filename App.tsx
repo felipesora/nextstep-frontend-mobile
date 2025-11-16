@@ -10,10 +10,13 @@ const Stack = createStackNavigator();
 function App() {
 
   const [fontsLoaded] = useFonts({
-    MontserratRegular: require("./assets/fonts/Montserrat-Regular.ttf"),
-    MontserratBold: require("./assets/fonts/Montserrat-Bold.ttf"),
-  });
+      'Montserrat-Regular': require('./assets/fonts/Montserrat-Regular.ttf'),
+      'Montserrat-Bold': require('./assets/fonts/Montserrat-Bold.ttf'),
+    });
 
+    if (!fontsLoaded) {
+      return null; // tela branca temporária enquanto carrega
+    }
 
   return (
     <ThemeProvider theme={theme}>

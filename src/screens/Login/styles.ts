@@ -1,93 +1,138 @@
-import styled from "styled-components/native";
-import theme from "../../styles/theme";
+import styled from 'styled-components/native';
+import theme from '../../styles/theme';
 
 export const Container = styled.View`
-    flex: 1;
-    justify-content: center;
-    padding: 16px;
-    background-color: ${theme.colors.background};
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: ${theme.colors.background};
+`;
+
+export const LoginCard = styled.View`
+  width: 100%;
+  max-width: 400px;
+  background-color: ${theme.colors.card};
+  border-radius: 20px;
+  shadow-color: #000;
+  shadow-offset: 0px 4px;
+  shadow-opacity: 0.1;
+  shadow-radius: 30px;
+  elevation: 8;
+  overflow: hidden;
+`;
+
+export const LoginHeader = styled.View`
+  background-color: ${theme.colors.primary};
+  padding: 40px 30px 30px;
+  align-items: center;
 `;
 
 export const Logo = styled.Image`
     align-self: center;
     margin-bottom: 20px;
+    width: 200px;
+    height: 50px;
 `;
 
-export const Titulo = styled.Text`
-    font-size: 24px;
-    margin-bottom: 10px;
-    text-align: center;
-    font-family: ${theme.fonts.bold};
+export const LogoSubtitle = styled.Text`
+  font-size: 14px;
+  opacity: 0.9;
+  color: white;
+  font-family: ${theme.fonts.regular};
 `;
 
-export const Subtitulo = styled.Text`
-    font-size: 18px;
-    color: ${theme.colors.secondary};
-    margin-bottom: 24px;
-    text-align: center;
-    font-family: ${theme.fonts.regular};
+export const LoginForm = styled.View`
+  padding: 30px;
 `;
 
-export const Input = styled.TextInput`
-    background-color: #ECEFF1;
-    border-color: gray;
-    border-width: 1px;
-    margin-bottom: 10px;
-    padding: 6px 0 6px 6px;
-    border-radius: 5px;
-    font-family: ${theme.fonts.regular};
+export const FormGroup = styled.View`
+  margin-bottom: 20px;
 `;
 
-export const MensagemErro = styled.Text`
-    color: ${theme.colors.error};
-    margin-bottom: 10px;
-    text-align: center;
-    font-family: ${theme.fonts.regular};
+export const FormLabel = styled.Text`
+  margin-bottom: 8px;
+  color: ${theme.colors.text};
+  font-weight: 500;
+  font-size: 14px;
+  font-family: ${theme.fonts.regular};
 `;
 
-export const MensagemSucesso = styled.Text`
-    color: ${theme.colors.success};
-    margin-bottom: 10px;
-    text-align: center;
-    font-family: ${theme.fonts.regular};
+export const FormInput = styled.TextInput`
+  width: 100%;
+  padding: 15px;
+  border: 1px solid ${theme.colors.lightgray};
+  border-radius: 10px;
+  font-size: 16px;
+  color: ${theme.colors.text};
+  background-color: ${theme.colors.background};
+  font-family: ${theme.fonts.regular};
 `;
 
-export const BotaoEntrar = styled.TouchableOpacity`
-    background-color: ${theme.colors.primary};
-    padding-vertical: 12px;
-    border-radius: 5px;
-    align-items: center;
-    justify-content: center;
+export const PasswordContainer = styled.View`
+  position: relative;
 `;
 
-export const TextoBotaoEntrar = styled.Text`
-    color: #FFFFFF;
-    font-size: 16px;
-    font-family: ${theme.fonts.bold};
+export const LoginButton = styled.TouchableOpacity`
+  width: 100%;
+  padding: 15px;
+  background-color: ${theme.colors.primary};
+  border-radius: 10px;
+  margin-bottom: 20px;
+  align-items: center;
+  justify-content: center;
+  shadow-color: #0078FF;
+  shadow-offset: 0px 4px;
+  shadow-opacity: 0.4;
+  shadow-radius: 8px;
+  elevation: 4;
 `;
 
-export const ContainerLink = styled.View`
-    flex-direction: row;
-    justify-content: center; 
-    align-items: center;
-    margin-top: 16px;
+export const LoginButtonText = styled.Text`
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: ${theme.fonts.bold};
 `;
 
-export const TextoLink = styled.Text`
-    margin-top: 16px;
-    color: #000000;
-    text-align: center;
-    font-family: ${theme.fonts.regular};
+export const SignupLink = styled.View`
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;
 
-export const BotaoLink = styled.TouchableOpacity`
-    justify-content: center;
+export const SignupText = styled.Text`
+  font-size: 14px;
+  color: ${theme.colors.gray};
+  font-family: ${theme.fonts.regular};
 `;
 
-export const TextoBotaoLink = styled.Text`
-    margin-top: 16px;
-    color: ${theme.colors.primary};
-    text-align: center;
-    text-decoration-line: underline;
-    font-family: ${theme.fonts.regular};
+export const SignupLinkText = styled.Text`
+  font-size: 14px;
+  color: ${theme.colors.primary};
+  font-weight: 500;
+  font-family: ${theme.fonts.regular};
+  text-decoration-line: underline;
+`;
+
+export const MensagemContainer = styled.View`
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+export const Sucesso = styled.Text`
+  font-size: 14px;
+  color: ${theme.colors.success};
+  font-weight: 600;
+  font-family: ${theme.fonts.regular};
+  text-align: center;
+`;
+
+export const Erro = styled.Text`
+  font-size: 14px;
+  color: ${theme.colors.error};
+  font-weight: 600;
+  font-family: ${theme.fonts.regular};
+  text-align: center;
 `;

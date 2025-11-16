@@ -1,23 +1,13 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
 
 const api = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "https://localhost:55873/",
 });
-
-interface JwtPayload {
-  exp: number;
-  iat?: number;
-  sub?: string;
-  [key: string]: any;
-}
 
 export interface UsuarioRequestDTO {
   nome: string;
   email: string;
   senha: string;
-  perfil: string;
 }
 
 export interface UsuarioRequestLoginDTO {
@@ -25,43 +15,31 @@ export interface UsuarioRequestLoginDTO {
   senha: string;
 }
 
-export async function login(usuario: UsuarioRequestLoginDTO) {
+export const listarUsuarios = async () => {
   try {
-    const response = await api.post(
-      "http://localhost:8080/auth/login",
-      usuario
+    const response = await api.get(
+      "/api/Usuario",
+      {
+        params: {
+          deslocamento: 0,
+          registrosRetornados: 100
+        }
+      }
     );
 
-    const data = response.data;
-    AsyncStorage.setItem("token", data.token);
-
-    const decoded: any = jwtDecode(data.token);
-    const userId = decoded.id;
-    AsyncStorage.setItem("userId", userId);
-
-    return data.token;
-
+    return response.data; // retorna a lista
   } catch (error) {
-    console.error("Erro no login:", error);
-    throw new Error("Login falhou! Verifique suas credenciais.");
+    console.error("Erro ao listar usuários:", error);
+    throw error;
   }
-}
-
-export const cadastrarUsuario = async (usuario: UsuarioRequestDTO) => {
-  return await api.post("/usuarios", usuario);
 };
 
-export async function isTokenValid(): Promise<boolean> {
-  const token = await AsyncStorage.getItem("token");
-  if (!token) return false;
-
+export const cadastrarUsuario = async (dados: UsuarioRequestDTO) => {
   try {
-    const decoded = jwtDecode<JwtPayload>(token);
-    const currentTime = Date.now() / 1000;
-
-    return decoded.exp > currentTime;
+    const response = await api.post("/api/Usuario", dados);
+    return response.data;
   } catch (error) {
-    console.error("Erro ao decodificar token:", error);
-    return false;
+    console.error("Erro ao cadastrar usuário:", error);
+    throw error;
   }
 };

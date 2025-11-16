@@ -1,16 +1,17 @@
 export default {
   colors: {
-     primary: '#546E7A',
-     secondary: '#78909C',
-     background: '#FFFFFF',
-     text: '#000000',
-     error: '#DC3545',
-     success: '#28A745',
-     border: '#546E7A',
-     backgroundCards: '#ECEFF1',
+     primary: '#0078FF',
+     secondary: '#6C63FF',
+     background: '#F5F7FA',
+     text: '#1E1E2A',
+     error: '#A44A48',
+     success: '#00C896',
+     card: '#ffffff',
+     gray: '#8C8C9A',
+     lightgray: '#E6E9EF'
   },
   fonts: {
-    regular: "MontserratRegular",
-    bold: "MontserratBold",
+    regular: "Montserrat-Regular",
+    bold: "Montserrat-Bold",
   },
 };

@@ -1,41 +1,39 @@
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../types/navigation";
-import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Alert } from "react-native";
-import { BotaoCabecalho, ContainerCabecalho, TextoBotaoCabecalho, TituloCabecalho } from "./styles";
+import React from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../types/navigation';
+import { Container, Logo, LogoImage, ProfileButton, ProfileText } from './styles';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 interface CabecalhoProps {
-  titulo: string;
+  mostrarBotaoPerfil?: boolean;
 }
 
-const Cabecalho = ({ titulo }: CabecalhoProps) => {
-    const navigation = useNavigation<NavigationProp>();
+const Cabecalho: React.FC<CabecalhoProps> = ({ mostrarBotaoPerfil = true }) => {
+  const navigation = useNavigation<NavigationProp>();
 
-    const handleLogout = async () => {
-        try {
-            await AsyncStorage.removeItem('userId');
-            await AsyncStorage.removeItem('token');
-            navigation.reset({
-                index: 0,
-                routes: [{ name: 'Login' }],
-            });
-        } catch (error) {
-            Alert.alert('Erro', 'Não foi possível realizar o logout.');
-        }
-    };
+  const handleProfilePress = () => {
+    navigation.navigate('Perfil');
+  };
 
-    return (
-        <ContainerCabecalho>
-            <TituloCabecalho>{titulo}</TituloCabecalho>
+  const handleLogoPress = () => {
+    navigation.navigate('PaginaInicial');
+  };
 
-            <BotaoCabecalho onPress={handleLogout}>
-                <TextoBotaoCabecalho>Logout</TextoBotaoCabecalho>
-            </BotaoCabecalho>
-        </ContainerCabecalho>
-    );
+  return (
+    <Container>
+      <Logo onPress={handleLogoPress}>
+        <LogoImage source={require("../../../assets/images/logo-azul.png")} />
+      </Logo>
+      
+      {mostrarBotaoPerfil && (
+        <ProfileButton onPress={handleProfilePress}>
+          <ProfileText>👤</ProfileText>
+        </ProfileButton>
+      )}
+    </Container>
+  );
 };
 
 export default Cabecalho;

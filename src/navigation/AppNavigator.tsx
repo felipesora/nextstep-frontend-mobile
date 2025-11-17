@@ -12,7 +12,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const AppNavigator: React.FC = () => {
 
-  const [initialRoute, setInitialRoute] = useState<keyof RootStackParamList | null>('Trilhas');
+  const [initialRoute, setInitialRoute] = useState<keyof RootStackParamList | null>('Login');
   
   // useEffect(() => {
   //   const checkAuth = async () => {

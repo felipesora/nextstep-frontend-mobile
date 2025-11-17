@@ -6,6 +6,7 @@ import {
   Descricao,
   InfoContainer,
   Nivel,
+  Area,
   AvaliacaoContainer,
   EstrelasContainer,
   Estrela,
@@ -15,13 +16,14 @@ import {
   DetalheTexto,
   BotaoAcessar,
   BotaoTexto,
-  Conteudo
+  Conteudo,
+  AreaContainer
 } from './styles';
 import FullStar from '../../../../../assets/images/estrela-cheia.png';
 import HalfStar from '../../../../../assets/images/estrela-metade.png';
 import EmptyStar from '../../../../../assets/images/estrela-vazia.png';
 import { Trilha } from '../../../../types/types';
-import { calcularMediaNotas, formatarNivelTrilha } from '../../../../utils/formatarTrilha';
+import { calcularMediaNotas, formatarNivelTrilha, formatarAreaTrilha } from '../../../../utils/formatarTrilha';
 
 interface CardTrilhaProps {
   trilha: Trilha;
@@ -56,14 +58,16 @@ const CardTrilha: React.FC<CardTrilhaProps> = ({ trilha, onAcessar }) => {
         <Nivel nivel={trilha.nivel}>{formatarNivelTrilha(trilha.nivel)}</Nivel>
       </Header>
       
+      <AreaContainer>
+        <Area area={trilha.area}>{formatarAreaTrilha(trilha.area)}</Area>
+      </AreaContainer>
+      
       <Descricao>{trilha.descricao}</Descricao>
       
       <InfoContainer>
         <AvaliacaoContainer>
           <EstrelasContainer>
-            <EstrelasContainer>
-              {renderEstrelas(calcularMediaNotas(trilha.notas))}
-            </EstrelasContainer>
+            {renderEstrelas(calcularMediaNotas(trilha.notas))}
           </EstrelasContainer>
           <AvaliacaoTexto>
             {calcularMediaNotas(trilha.notas)} ({trilha.notas.length} avaliações)
@@ -74,7 +78,7 @@ const CardTrilha: React.FC<CardTrilhaProps> = ({ trilha, onAcessar }) => {
           <Detalhe>
             <DetalheTexto>
               <Conteudo source={require("../../../../../assets/images/conteudo-icon.png")}/>
-            {trilha.conteudos.length} conteúdos
+              {trilha.conteudos.length} conteúdos
             </DetalheTexto>
           </Detalhe>
         </DetalhesContainer>

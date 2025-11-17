@@ -11,7 +11,28 @@ export const formatarNivelTrilha = (nivel: string) => {
         default:
             break;
     }
-}
+};
+
+export const formatarAreaTrilha = (area: string) => {
+    switch (area) {
+        case "BACKEND":
+            return "Backend"
+        case "WEB":
+            return "Desenvolvimento WEB"
+        case "DATA_SCIENCE":
+            return "Data Science"
+        case "MOBILE":
+            return "Desenvolvimento MOBILE"
+        case "DESIGN":
+            return "Design"
+        case "DEVOPS":
+            return "DevOps"
+        case "IA":
+            return "IA"
+        default:
+            return area
+    }
+};
 
 export const calcularMediaNotas = (notas: Nota[]) => {
     if (!notas || notas.length === 0) return 0;

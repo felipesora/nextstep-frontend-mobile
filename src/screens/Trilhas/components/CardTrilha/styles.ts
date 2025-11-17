@@ -17,7 +17,7 @@ export const Header = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 `;
 
 export const Titulo = styled.Text`
@@ -44,6 +44,40 @@ export const Nivel = styled.Text<{ nivel: string }>`
         return theme.colors.secondary;
       case 'AVANCADO':
         return theme.colors.primary;
+      default:
+        return theme.colors.gray;
+    }
+  }};
+`;
+
+export const AreaContainer = styled.View`
+  margin-bottom: 12px;
+`;
+
+export const Area = styled.Text<{ area: string }>`
+  font-size: 11px;
+  font-weight: 500;
+  color: white;
+  font-family: ${theme.fonts.regular};
+  padding: 3px 10px;
+  border-radius: 10px;
+  align-self: flex-start;
+  background-color: ${props => {
+    switch (props.area) {
+      case 'BACKEND':
+        return '#8B5CF6'; // Roxo
+      case 'WEB':
+        return '#06B6D4'; // Ciano
+      case 'DATA_SCIENCE':
+        return '#10B981'; // Verde
+      case 'MOBILE':
+        return '#F59E0B'; // Âmbar
+      case 'DESIGN':
+        return '#EC4899'; // Rosa
+      case 'DEVOPS':
+        return '#EF4444'; // Vermelho
+      case 'IA':
+        return '#7C3AED'; // Violeta
       default:
         return theme.colors.gray;
     }
@@ -100,13 +134,12 @@ export const DetalheTexto = styled.Text`
   font-family: ${theme.fonts.regular};
   display: flex;
   align-items: center;
-  gap: 3px;
 `;
 
 export const Conteudo = styled.Image`
-  width: 20px;
-  height: 20px;
-  margin-right: 2px;
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
 `;
 
 export const BotaoAcessar = styled.TouchableOpacity`

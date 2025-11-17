@@ -22,3 +22,13 @@ export const listarTrilhasAtivas = async () => {
     throw error;
   }
 };
+
+export const buscarTrilhaPorId = async (id: number) => {
+  try {
+    const response = await api.get(`/api/Trilha/${id}`);
+    return response.data; // retorna a trilha específica
+  } catch (error) {
+    console.error(`Erro ao buscar trilha com ID ${id}:`, error);
+    throw error;
+  }
+};

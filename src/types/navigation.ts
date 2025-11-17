@@ -21,5 +21,6 @@ export type RootStackParamList = {
     Login: undefined;
     Cadastro: undefined;
     Trilhas: undefined;
-    DetalhesTrilha: { idTrilha: number }
+    DetalhesTrilha: { idTrilha: number };
+    AvaliarTrilha: { idTrilha: number };
 };

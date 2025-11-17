@@ -41,3 +41,37 @@ export const calcularMediaNotas = (notas: Nota[]) => {
     const media = soma / notas.length;
     return Number(media.toFixed(1));
 };
+
+export const formatarTipoConteudo = (tipo: string): string => {
+  switch (tipo) {
+    case 'CURSO':
+      return 'Curso';
+    case 'ARTIGO':
+      return 'Artigo';
+    case 'PODCAST':
+      return 'Podcast';
+    case 'VIDEO':
+      return 'Vídeo';
+    case 'DESAFIO':
+      return 'Desafio';
+    default:
+      return tipo;
+  }
+};
+
+export const getTextoLink = (tipo: string): string => {
+  switch (tipo) {
+    case 'CURSO':
+      return 'Acessar Curso';
+    case 'ARTIGO':
+      return 'Ler Artigo';
+    case 'PODCAST':
+      return 'Ouvir Podcast';
+    case 'VIDEO':
+      return 'Assistir Vídeo';
+    case 'DESAFIO':
+      return 'Iniciar Desafio';
+    default:
+      return 'Acessar Conteúdo';
+  }
+};

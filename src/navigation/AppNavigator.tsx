@@ -7,12 +7,13 @@ import { RootStackParamList } from '../types/navigation';
 import Login from '../screens/Login';
 import Cadastro from '../screens/Cadastro';
 import Trilhas from '../screens/Trilhas';
+import DetalhesTrilha from '../screens/DetalhesTrilha';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const AppNavigator: React.FC = () => {
 
-  const [initialRoute, setInitialRoute] = useState<keyof RootStackParamList | null>('Login');
+  const [initialRoute, setInitialRoute] = useState<keyof RootStackParamList | null>('Trilhas');
   
   // useEffect(() => {
   //   const checkAuth = async () => {
@@ -39,6 +40,7 @@ export const AppNavigator: React.FC = () => {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Cadastro" component={Cadastro} />
         <Stack.Screen name="Trilhas" component={Trilhas} />
+        <Stack.Screen name="DetalhesTrilha" component={DetalhesTrilha} />
       </Stack.Navigator>
     </NavigationContainer>
   );

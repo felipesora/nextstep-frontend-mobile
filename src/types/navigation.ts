@@ -20,4 +20,5 @@
 export type RootStackParamList = {
     Login: undefined;
     Cadastro: undefined;
+    Trilhas: undefined;
 };

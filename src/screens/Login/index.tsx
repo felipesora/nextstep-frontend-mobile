@@ -25,6 +25,7 @@ import { RootStackParamList } from '../../types/navigation';
 import { listarUsuarios } from '../../services/usuarioService';
 import { Usuario } from '../../types/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Cabecalho from '../../components/Cabecalho';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -74,7 +75,7 @@ const Login = () => {
             await AsyncStorage.setItem("usuarioId", String(usuarioEncontrado.id));
 
             setTimeout(() => {
-                navigation.navigate('Login');
+                navigation.navigate('Trilhas');
             }, 2000);
             
         } else {

@@ -6,41 +6,32 @@ export type Usuario = {
   dataCadastro: string;
 };
 
-// export type Moto = {
-//   id_moto: number;
-//   placa: string;
-//   chassi: string;
-//   modelo: string;
-//   status: string;
-//   movimentacoes: Movimentacao[];
-//   alertas: Alerta[];
-// };
+export type Trilha = {
+  id: number;
+  nome: string;
+  descricao: string;
+  area: string;
+  nivel: string;
+  status: string;
+  dataCriacao: string;
+  conteudos: Conteudo[];
+  notas: Nota[];
+};
 
-// export type Alerta = {
-//   id_alerta: number;
-//   gravidade: string;
-//   mensagem: string;
-//   moto_id: number;
-//   data_alerta: string;
-// };
+export type Conteudo = {
+  id: number;
+  titulo: string;
+  descricao: string;
+  tipo: string;
+  link: string | null;
+  idTrilha: number;
+  dataCriacao: string;
+};
 
-// export type Departamento = {
-//   id_departamento: number;
-//   descricao: string;
-// };
-
-// export type Colaborador = {
-//   id: number;
-//   nome: string;
-//   matricula: string;
-//   email: string;
-// }
-
-// export type Servico = {
-//   id: number;
-//   descricao: string;
-//   dataCadastro: string;
-//   status: string;
-//   motoId: number
-//   colaborador: Colaborador;
-// }
+export type Nota = {
+  id: number;
+  valorNota: number;
+  observacao: string | null;
+  idTrilha: number;
+  idUsuario: number;
+};

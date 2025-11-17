@@ -1,31 +1,59 @@
-import styled from "styled-components/native";
-import theme from "../../styles/theme";
+import styled from 'styled-components/native';
+import theme from '../../styles/theme';
 
-export const ContainerCabecalho = styled.View`
-    padding: 40px 16px 30px 16px;
-    padding-top: 40px;
-    background-color: ${theme.colors.primary};
-    align-items: center;
-    display: flex;
-    flex-direction: column;
+export const Container = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background-color: ${theme.colors.card};
+  border-bottom-width: 1px;
+  border-bottom-color: ${theme.colors.lightgray};
+  shadow-color: #000;
+  shadow-offset: 0px 2px;
+  shadow-opacity: 0.1;
+  shadow-radius: 8px;
+  elevation: 4;
 `;
 
-export const TituloCabecalho = styled.Text`
-    font-size: 24px;
-    color: #fff;
-    padding-bottom: 10px;
-    font-family: ${theme.fonts.bold};
-    align-items: center;
-    margin-bottom: 7px;
+export const Logo = styled.TouchableOpacity`
+  padding: 8px;
 `;
 
-export const BotaoCabecalho = styled.TouchableOpacity`
-    align-items: center;
+export const LogoImage = styled.Image`
+  width: 120px;
+  height: 30px;
+  resize-mode: contain;
 `;
 
-export const TextoBotaoCabecalho = styled.Text`
-    color: #fff;
-    text-decoration-line: underline;
-    font-size: 14px;
-    font-family: ${theme.fonts.regular};
+export const ProfileButton = styled.TouchableOpacity`
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: ${theme.colors.lightgray};
+  justify-content: center;
+  align-items: center;
+  border: 2px solid ${theme.colors.primary};
 `;
+
+export const ProfileIcon = styled.Image`
+  width: 120px;
+  height: 25px;
+  resize-mode: contain;
+`;
+
+// Remova estas linhas se não for usar (são da versão SVG):
+// export const ProfileIconContainer = styled.View`
+//   width: 40px;
+//   height: 40px;
+//   border-radius: 20px;
+//   background-color: ${theme.colors.lightgray};
+//   justify-content: center;
+//   align-items: center;
+//   border: 2px solid ${theme.colors.primary};
+// `;
+
+// export const ProfileIcon = styled.View`
+//   justify-content: center;
+//   align-items: center;
+// `;

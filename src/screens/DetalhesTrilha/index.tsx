@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollView, ActivityIndicator, Alert } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../types/navigation';
 import Cabecalho from '../../components/Cabecalho';
@@ -50,23 +50,48 @@ const DetalhesTrilha = () => {
   const [trilha, setTrilha] = useState<Trilha | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const buscarTrilha = async () => {
-      try {
-        if (idTrilha) {
-          const trilhaData = await buscarTrilhaPorId(idTrilha);
-          setTrilha(trilhaData);
-        }
-      } catch (error) {
-        console.error("Erro ao buscar trilha:", error);
-        Alert.alert('Erro', 'Não foi possível carregar os detalhes da trilha');
-      } finally {
-        setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const buscarTrilha = async () => {
+  //     try {
+  //       if (idTrilha) {
+  //         const trilhaData = await buscarTrilhaPorId(idTrilha);
+  //         setTrilha(trilhaData);
+  //       }
+  //     } catch (error) {
+  //       console.error("Erro ao buscar trilha:", error);
+  //       Alert.alert('Erro', 'Não foi possível carregar os detalhes da trilha');
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    buscarTrilha();
-  }, [idTrilha]);
+  //   buscarTrilha();
+  // }, [idTrilha]);
+
+  useFocusEffect(
+    useCallback(() => {
+      let ativo = true;
+
+      const buscarTrilha = async () => {
+        try {
+          setLoading(true);
+          const dados = await buscarTrilhaPorId(idTrilha);
+          if (ativo) setTrilha(dados);
+        } catch (error) {
+          console.error("Erro ao buscar trilha:", error);
+          Alert.alert('Erro', 'Não foi possível carregar os detalhes da trilha');
+        } finally {
+          if (ativo) setLoading(false);
+        }
+      };
+
+      buscarTrilha();
+
+      return () => {
+        ativo = false;
+      };
+    }, [idTrilha])
+  );
 
   // Função para renderizar estrelas
   const renderEstrelas = (avaliacao: number) => {
@@ -92,12 +117,7 @@ const DetalhesTrilha = () => {
   };
 
   const handleAvaliarTrilha = () => {
-    Alert.alert(
-      'Avaliar Trilha',
-      'Funcionalidade de avaliação em desenvolvimento!',
-      [{ text: 'OK' }]
-    );
-    // navigation.navigate('AvaliarTrilha', { idTrilha });
+    navigation.navigate('AvaliarTrilha', { idTrilha });
   };
 
   if (loading) {

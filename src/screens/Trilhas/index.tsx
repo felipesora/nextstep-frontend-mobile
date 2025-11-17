@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollView } from 'react-native';
 import Cabecalho from '../../components/Cabecalho';
 import { 
@@ -13,7 +13,7 @@ import { listarTrilhasAtivas } from '../../services/trilhaService';
 import { Trilha } from '../../types/types';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../types/navigation';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -21,24 +21,41 @@ const Trilhas = () => {
   const navigation = useNavigation<NavigationProp>();
   const [trilhas, setTrilhas] = useState<Trilha[]>([]);
 
-  useEffect(() => {
-    const buscarTrilhas = async () => {
-          try {
-              const response = await listarTrilhasAtivas();
+  // useEffect(() => {
+  //   const buscarTrilhas = async () => {
+  //         try {
+  //             const response = await listarTrilhasAtivas();
   
-              const lista: Trilha[] = response.data;
+  //             const lista: Trilha[] = response.data;
   
-              setTrilhas(lista);
+  //             setTrilhas(lista);
   
-              console.log("Trilhas ativas:", lista);
-          } catch (error) {
-              console.error("Erro ao buscar trilhas", error);
-          }
+  //             console.log("Trilhas ativas:", lista);
+  //         } catch (error) {
+  //             console.error("Erro ao buscar trilhas", error);
+  //         }
           
-      };
+  //     };
   
+  //     buscarTrilhas();
+  // }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      const buscarTrilhas = async () => {
+        try {
+          const response = await listarTrilhasAtivas();
+          const lista: Trilha[] = response.data;
+          setTrilhas(lista);
+          console.log("Trilhas ativas:", lista);
+        } catch (error) {
+          console.error("Erro ao buscar trilhas", error);
+        }
+      };
+
       buscarTrilhas();
-  }, []);
+    }, [])
+  );
 
   const handleAcessarTrilha = (trilhaId: number) => {
     console.log('Acessar trilha:', trilhaId);

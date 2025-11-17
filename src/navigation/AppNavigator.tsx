@@ -8,6 +8,7 @@ import Login from '../screens/Login';
 import Cadastro from '../screens/Cadastro';
 import Trilhas from '../screens/Trilhas';
 import DetalhesTrilha from '../screens/DetalhesTrilha';
+import AvaliarTrilha from '../screens/AvaliarTrilha';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -41,6 +42,7 @@ export const AppNavigator: React.FC = () => {
         <Stack.Screen name="Cadastro" component={Cadastro} />
         <Stack.Screen name="Trilhas" component={Trilhas} />
         <Stack.Screen name="DetalhesTrilha" component={DetalhesTrilha} />
+        <Stack.Screen name="AvaliarTrilha" component={AvaliarTrilha} />
       </Stack.Navigator>
     </NavigationContainer>
   );

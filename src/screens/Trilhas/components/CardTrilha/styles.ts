@@ -37,12 +37,12 @@ export const Nivel = styled.Text<{ nivel: string }>`
   padding: 4px 12px;
   border-radius: 12px;
   background-color: ${props => {
-    switch (props.nivel.toLowerCase()) {
-      case 'iniciante':
+    switch (props.nivel) {
+      case 'INICIANTE':
         return theme.colors.success;
-      case 'intermediário':
+      case 'INTERMEDIARIO':
         return theme.colors.secondary;
-      case 'avançado':
+      case 'AVANCADO':
         return theme.colors.primary;
       default:
         return theme.colors.gray;
@@ -74,8 +74,9 @@ export const EstrelasContainer = styled.View`
   margin-bottom: 4px;
 `;
 
-export const Estrela = styled.Text`
-  font-size: 16px;
+export const Estrela = styled.Image`
+  width: 20px;
+  height: 20px;
   margin-right: 2px;
 `;
 
@@ -97,6 +98,15 @@ export const DetalheTexto = styled.Text`
   font-size: 12px;
   color: ${theme.colors.gray};
   font-family: ${theme.fonts.regular};
+  display: flex;
+  align-items: center;
+  gap: 3px;
+`;
+
+export const Conteudo = styled.Image`
+  width: 20px;
+  height: 20px;
+  margin-right: 2px;
 `;
 
 export const BotaoAcessar = styled.TouchableOpacity`

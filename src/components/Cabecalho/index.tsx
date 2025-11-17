@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../types/navigation';
-import { Container, Logo, LogoImage, ProfileButton, ProfileText } from './styles';
+import { Container, Logo, LogoImage, ProfileButton, ProfileIcon, ProfileText } from './styles';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -18,7 +18,7 @@ const Cabecalho: React.FC<CabecalhoProps> = ({ mostrarBotaoPerfil = true }) => {
   };
 
   const handleLogoPress = () => {
-    navigation.navigate('PaginaInicial');
+    navigation.navigate('Trilhas');
   };
 
   return (
@@ -29,7 +29,7 @@ const Cabecalho: React.FC<CabecalhoProps> = ({ mostrarBotaoPerfil = true }) => {
       
       {mostrarBotaoPerfil && (
         <ProfileButton onPress={handleProfilePress}>
-          <ProfileText>👤</ProfileText>
+          <ProfileIcon source={require("../../../assets/images/user-icon.png")} />
         </ProfileButton>
       )}
     </Container>

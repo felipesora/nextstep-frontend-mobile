@@ -36,8 +36,10 @@ export const ProfileButton = styled.TouchableOpacity`
   border: 2px solid ${theme.colors.primary};
 `;
 
-export const ProfileText = styled.Text`
-  font-size: 20px;
+export const ProfileIcon = styled.Image`
+  width: 120px;
+  height: 25px;
+  resize-mode: contain;
 `;
 
 // Remova estas linhas se não for usar (são da versão SVG):

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native';
 import Cabecalho from '../../components/Cabecalho';
 import { 
@@ -9,6 +9,8 @@ import {
   ListaTrilhas
 } from './styles';
 import CardTrilha from './components/CardTrilha';
+import { listarTrilhasAtivas } from '../../services/trilhaService';
+import { Trilha } from '../../types/types';
 
 // Dados mockados - substitua pela sua API
 const trilhasMock = [
@@ -57,7 +59,7 @@ const trilhasMock = [
     titulo: 'UX/UI Design',
     descricao: 'Design thinking, Figma e prototipagem',
     nivel: 'Iniciante',
-    avaliacao: 4.6,
+    avaliacao: 3.5,
     totalAvaliacoes: 89,
     duracao: '35h',
     modulos: 10
@@ -65,6 +67,27 @@ const trilhasMock = [
 ];
 
 const Trilhas = () => {
+  const [trilhas, setTrilhas] = useState<Trilha[]>([]);
+
+  useEffect(() => {
+    const buscarTrilhas = async () => {
+          try {
+              const response = await listarTrilhasAtivas();
+  
+              const lista: Trilha[] = response.data;
+  
+              setTrilhas(lista);
+  
+              console.log("Trilhas ativas:", lista);
+          } catch (error) {
+              console.error("Erro ao buscar trilhas", error);
+          }
+          
+      };
+  
+      buscarTrilhas();
+  }, []);
+
   const handleAcessarTrilha = (trilhaId: string) => {
     console.log('Acessar trilha:', trilhaId);
     // Navegar para detalhes da trilha
@@ -82,7 +105,7 @@ const Trilhas = () => {
           </Descricao>
           
           <ListaTrilhas>
-            {trilhasMock.map(trilha => (
+            {trilhas.map(trilha => (
               <CardTrilha
                 key={trilha.id}
                 trilha={trilha}

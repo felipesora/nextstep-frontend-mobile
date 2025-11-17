@@ -14,19 +14,14 @@ import {
   Detalhe,
   DetalheTexto,
   BotaoAcessar,
-  BotaoTexto
+  BotaoTexto,
+  Conteudo
 } from './styles';
-
-interface Trilha {
-  id: string;
-  titulo: string;
-  descricao: string;
-  nivel: string;
-  avaliacao: number;
-  totalAvaliacoes: number;
-  duracao: string;
-  modulos: number;
-}
+import FullStar from '../../../../../assets/images/estrela-cheia.png';
+import HalfStar from '../../../../../assets/images/estrela-metade.png';
+import EmptyStar from '../../../../../assets/images/estrela-vazia.png';
+import { Trilha } from '../../../../types/types';
+import { calcularMediaNotas, formatarNivelTrilha } from '../../../../utils/formatarTrilha';
 
 interface CardTrilhaProps {
   trilha: Trilha;
@@ -34,6 +29,7 @@ interface CardTrilhaProps {
 }
 
 const CardTrilha: React.FC<CardTrilhaProps> = ({ trilha, onAcessar }) => {
+  
   // Função para renderizar estrelas
   const renderEstrelas = (avaliacao: number) => {
     const estrelas = [];
@@ -42,11 +38,11 @@ const CardTrilha: React.FC<CardTrilhaProps> = ({ trilha, onAcessar }) => {
 
     for (let i = 1; i <= 5; i++) {
       if (i <= estrelasCheias) {
-        estrelas.push('⭐');
+        estrelas.push(<Estrela key={i} source={FullStar} />);
       } else if (i === estrelasCheias + 1 && temMeiaEstrela) {
-        estrelas.push('🌟');
+        estrelas.push(<Estrela key={i} source={HalfStar} />);
       } else {
-        estrelas.push('☆');
+        estrelas.push(<Estrela key={i} source={EmptyStar} />);
       }
     }
 
@@ -56,8 +52,8 @@ const CardTrilha: React.FC<CardTrilhaProps> = ({ trilha, onAcessar }) => {
   return (
     <Container>
       <Header>
-        <Titulo>{trilha.titulo}</Titulo>
-        <Nivel nivel={trilha.nivel}>{trilha.nivel}</Nivel>
+        <Titulo>{trilha.nome}</Titulo>
+        <Nivel nivel={trilha.nivel}>{formatarNivelTrilha(trilha.nivel)}</Nivel>
       </Header>
       
       <Descricao>{trilha.descricao}</Descricao>
@@ -65,18 +61,21 @@ const CardTrilha: React.FC<CardTrilhaProps> = ({ trilha, onAcessar }) => {
       <InfoContainer>
         <AvaliacaoContainer>
           <EstrelasContainer>
-            {renderEstrelas(trilha.avaliacao).map((estrela, index) => (
-              <Estrela key={index}>{estrela}</Estrela>
-            ))}
+            <EstrelasContainer>
+              {renderEstrelas(calcularMediaNotas(trilha.notas))}
+            </EstrelasContainer>
           </EstrelasContainer>
           <AvaliacaoTexto>
-            {trilha.avaliacao} ({trilha.totalAvaliacoes} avaliações)
+            {calcularMediaNotas(trilha.notas)} ({trilha.notas.length} avaliações)
           </AvaliacaoTexto>
         </AvaliacaoContainer>
         
         <DetalhesContainer>
           <Detalhe>
-            <DetalheTexto>📚 {trilha.modulos} conteúdos</DetalheTexto>
+            <DetalheTexto>
+              <Conteudo source={require("../../../../../assets/images/conteudo-icon.png")}/>
+            {trilha.conteudos.length} conteúdos
+            </DetalheTexto>
           </Detalhe>
         </DetalhesContainer>
       </InfoContainer>

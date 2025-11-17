@@ -1,16 +1,11 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://localhost:55873/",
+  baseURL: "http://localhost:56500/",
 });
 
 export interface UsuarioRequestDTO {
   nome: string;
-  email: string;
-  senha: string;
-}
-
-export interface UsuarioRequestLoginDTO {
   email: string;
   senha: string;
 }

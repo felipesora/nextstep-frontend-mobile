@@ -23,4 +23,5 @@ export type RootStackParamList = {
     Trilhas: undefined;
     DetalhesTrilha: { idTrilha: number };
     AvaliarTrilha: { idTrilha: number };
+    Formulario: undefined;
 };

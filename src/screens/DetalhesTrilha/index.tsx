@@ -113,7 +113,7 @@ const DetalhesTrilha = () => {
   };
 
   const handleVoltar = () => {
-    navigation.goBack();
+    navigation.navigate('Trilhas');
   };
 
   const handleAvaliarTrilha = () => {

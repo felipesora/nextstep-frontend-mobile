@@ -6,7 +6,13 @@ import {
   Content,
   Titulo,
   Descricao,
-  ListaTrilhas
+  ListaTrilhas,
+  // Novos componentes
+  AjudaContainer,
+  AjudaTitulo,
+  AjudaDescricao,
+  AjudaButton,
+  AjudaButtonText,
 } from './styles';
 import CardTrilha from './components/CardTrilha';
 import { listarTrilhasAtivas } from '../../services/trilhaService';
@@ -20,25 +26,6 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 const Trilhas = () => {
   const navigation = useNavigation<NavigationProp>();
   const [trilhas, setTrilhas] = useState<Trilha[]>([]);
-
-  // useEffect(() => {
-  //   const buscarTrilhas = async () => {
-  //         try {
-  //             const response = await listarTrilhasAtivas();
-  
-  //             const lista: Trilha[] = response.data;
-  
-  //             setTrilhas(lista);
-  
-  //             console.log("Trilhas ativas:", lista);
-  //         } catch (error) {
-  //             console.error("Erro ao buscar trilhas", error);
-  //         }
-          
-  //     };
-  
-  //     buscarTrilhas();
-  // }, []);
 
   useFocusEffect(
     useCallback(() => {
@@ -62,6 +49,10 @@ const Trilhas = () => {
     navigation.navigate('DetalhesTrilha', { idTrilha: trilhaId });
   };
 
+  const handleAjudaEscolha = () => {
+    navigation.navigate('Formulario');
+  };
+
   return (
     <Container>
       <Cabecalho />
@@ -71,6 +62,18 @@ const Trilhas = () => {
           <Descricao>
             Escolha sua jornada de aprendizado e dê o próximo passo na sua carreira
           </Descricao>
+
+          {/* Seção de Ajuda */}
+          <AjudaContainer>
+            <AjudaTitulo>Precisa de ajuda para escolher?</AjudaTitulo>
+            <AjudaDescricao>
+              Não sabe por onde começar? Nosso assistente inteligente vai recomendar 
+              a trilha perfeita baseada no seu nível, objetivos e interesses.
+            </AjudaDescricao>
+            <AjudaButton onPress={handleAjudaEscolha}>
+              <AjudaButtonText>Descobrir Minha Trilha Ideal</AjudaButtonText>
+            </AjudaButton>
+          </AjudaContainer>
           
           <ListaTrilhas>
             {trilhas.map(trilha => (

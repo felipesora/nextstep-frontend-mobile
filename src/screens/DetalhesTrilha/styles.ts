@@ -30,6 +30,9 @@ export const VoltarButtonText = styled.Text`
   color: ${theme.colors.text};
   font-family: ${theme.fonts.regular};
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 `;
 
 // Container para avaliação + botão
@@ -196,4 +199,10 @@ export const EmptyText = styled.Text`
   font-family: ${theme.fonts.regular};
   text-align: center;
   margin-top: 20px;
+`;
+
+export const Icone = styled.Image`
+  width: 15px;
+  height: 15px;
+  margin-right: 4px;
 `;

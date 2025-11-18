@@ -31,7 +31,8 @@ import {
   VoltarButtonText,
   AvaliarButton,
   AvaliarButtonText,
-  AvaliacaoContainer
+  AvaliacaoContainer,
+  Icone
 } from './styles';
 import { buscarTrilhaPorId } from '../../services/trilhaService';
 import { Trilha } from '../../types/types';
@@ -150,7 +151,10 @@ const DetalhesTrilha = () => {
           {/* Botão Voltar no topo */}
           <ActionsContainer>
             <VoltarButton onPress={handleVoltar}>
-              <VoltarButtonText>← Voltar para Trilhas</VoltarButtonText>
+              <VoltarButtonText>
+                <Icone source={require("../../../assets/images/voltar-cinza-icon.png")}/> 
+                Voltar para Trilhas
+              </VoltarButtonText>
             </VoltarButton>
           </ActionsContainer>
 

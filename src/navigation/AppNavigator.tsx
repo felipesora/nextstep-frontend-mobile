@@ -10,6 +10,9 @@ import Trilhas from '../screens/Trilhas';
 import DetalhesTrilha from '../screens/DetalhesTrilha';
 import AvaliarTrilha from '../screens/AvaliarTrilha';
 import FormularioRecomendacao from '../screens/FormularioRecomendacao';
+import Perfil from '../screens/Perfil';
+import EditarPerfil from '../screens/EditarPerfil';
+import ConfirmarDelecaoConta from '../screens/ConfirmarDelecaoConta';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -45,6 +48,9 @@ export const AppNavigator: React.FC = () => {
         <Stack.Screen name="DetalhesTrilha" component={DetalhesTrilha} />
         <Stack.Screen name="AvaliarTrilha" component={AvaliarTrilha} />
         <Stack.Screen name="Formulario" component={FormularioRecomendacao} />
+        <Stack.Screen name="Perfil" component={Perfil} />
+        <Stack.Screen name="EditarPerfil" component={EditarPerfil} />
+        <Stack.Screen name="ConfirmarDelecaoConta" component={ConfirmarDelecaoConta} />
       </Stack.Navigator>
     </NavigationContainer>
   );

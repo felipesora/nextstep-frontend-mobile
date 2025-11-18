@@ -29,12 +29,42 @@ export const listarUsuarios = async () => {
   }
 };
 
+export const buscarUsuarioPorId = async (id: number) => {
+  try {
+    const response = await api.get(`/api/Usuario/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Erro ao buscar usuário com ID ${id}:`, error);
+    throw error;
+  }
+};
+
 export const cadastrarUsuario = async (dados: UsuarioRequestDTO) => {
   try {
     const response = await api.post("/api/Usuario", dados);
     return response.data;
   } catch (error) {
     console.error("Erro ao cadastrar usuário:", error);
+    throw error;
+  }
+};
+
+export const editarUsuario = async (id: number, dados: UsuarioRequestDTO) => {
+  try {
+    const response = await api.put(`/api/Usuario/${id}`, dados);
+    return response.data;
+  } catch (error) {
+    console.error(`Erro ao editar usuário com ID ${id}:`, error);
+    throw error;
+  }
+};
+
+export const deletarUsuario = async (id: number) => {
+  try {
+    const response = await api.delete(`/api/Usuario/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Erro ao deletar usuário com ID ${id}:`, error);
     throw error;
   }
 };

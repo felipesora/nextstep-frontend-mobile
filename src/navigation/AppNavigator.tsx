@@ -13,24 +13,25 @@ import FormularioRecomendacao from '../screens/FormularioRecomendacao';
 import Perfil from '../screens/Perfil';
 import EditarPerfil from '../screens/EditarPerfil';
 import ConfirmarDelecaoConta from '../screens/ConfirmarDelecaoConta';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const AppNavigator: React.FC = () => {
 
-  const [initialRoute, setInitialRoute] = useState<keyof RootStackParamList | null>('Trilhas');
+  const [initialRoute, setInitialRoute] = useState<keyof RootStackParamList | null>(null);
   
-  // useEffect(() => {
-  //   const checkAuth = async () => {
-  //     const valid = await isTokenValid();
-  //     if (valid) {
-  //       setInitialRoute("PaginaInicial");
-  //     } else {
-  //       setInitialRoute("Login");
-  //     }
-  //   };
-  //   checkAuth();
-  // }, []);
+  useEffect(() => {
+    const checkAuth = async () => {
+      const valid = await AsyncStorage.getItem('usuarioId');
+      if (valid) {
+        setInitialRoute("Trilhas");
+      } else {
+        setInitialRoute("Login");
+      }
+    };
+    checkAuth();
+  }, []);
 
   if (!initialRoute) {
     return null;

@@ -203,15 +203,19 @@ O app foi projetado para ser simples, objetivo e focado na jornada de aprendizad
 A seguir, algumas telas representativas do aplicativo:
 
 **🔐 Tela de Login**
+
 ![Tela de Login](assets/docs/login.png)
 
 **📚 Lista de Trilhas Disponíveis**
+
 ![Tela de Trilhas](assets/docs/trilhas.png)
 
 **🗃️ Conteúdos de uma Trilha**
+
 ![Tela de Conteúdos](assets/docs/conteudos.png)
 
 **🤖 Recomendação da IA**
+
 ![Tela de IA](assets/docs/ia.png)
 
 ---
